@@ -5,6 +5,11 @@ I created this script to allow me to quickly login into my client's WordPress si
 
 **_To use this script, you must have access to the web server itself (via FTP or SSH) because you need to upload this file and execute it through the browser_**.
 
+**Possible use cases:**
+- *You lose access to the site or forgot the credentials.*
+- *The site is somehow hacked / being taken over by someone.*
+- *You wanted to create a new admin user on the fly.*
+
 Instructions:
 ------
 

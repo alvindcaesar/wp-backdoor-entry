@@ -1,7 +1,7 @@
 WP Backdoor Entry Script
 ======
 
-I created this script to allow me to quickly login into my client's WordPress site after they have completely ~~fucked~~ messed things up. This will allows me to immediately create a new user with Administrator role and reset their details without having to fiddle with the database.
+I created this script to enable me to quickly login into my client's WordPress site after they have completely ~~fucked~~ messed things up. This will allows me to immediately create a new user with Administrator role and reset their details without having to fiddle with the database.
 
 **_To use this script, you must have access to the web server itself (via FTP or SSH) because you need to upload this file and execute it through the browser_**.
 

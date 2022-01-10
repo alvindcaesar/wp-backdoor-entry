@@ -1,7 +1,7 @@
 WP Backdoor Entry Script
 ======
 
-I created this script to enable me to quickly login into my client's WordPress site after they have completely ~~fucked~~ messed things up. This will allows me to immediately create a new user with Administrator role and reset their details without having to fiddle with the database.
+I created this script to enable me to quickly login into my client's WordPress site after they have completely ~~fucked~~ messed things up. This will allows me to immediately create a new user with any role and reset their details without having to fiddle with the database.
 
 **_To use this script, you must have access to the web server itself (via FTP or SSH) because you need to upload this file and execute it through the browser_**.
 
@@ -17,7 +17,7 @@ Instructions:
 
 2. Execute the script through your browser at `https://yourdomain.com/backdoor.php`. Replace `yourdomain.com` with your own domain name.
 
-3. If it executes successfully, you should be redirected to WordPress login page and you will be able to login with the newly created admin user with the default credential => **username:** `administrator` | **password:** `password`.
+3. If it executes successfully, you should be redirected to WordPress login page and you will be able to login with the newly created user account based on the credential that you just entered.
 
 4. **IMPORTANT**: Finally, delete the `backdoor.php` file. It's not a good idea to leave it inside the server because someone might exploit it.
 

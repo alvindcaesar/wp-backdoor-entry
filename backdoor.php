@@ -63,7 +63,14 @@ function vc_create_administrator($username, $password, $email, $role, $wp_load_p
   }
 }
 
+/**
+ * Invoke the function
+ */
 vc_create_administrator($username, $password, $email, $role, $wp_load_path);
+
+/**
+ * Hook into WordPress action
+ */
 add_action('init', 'vc_create_administrator');
 
 ?>

